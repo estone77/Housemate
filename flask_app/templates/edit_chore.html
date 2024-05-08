@@ -1,0 +1,70 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">                        
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+{% endwith %}
+    <div class="card">
+        <div class="card-head p-3">
+            <h2>Edit {{ chore.chore_title }}</h2>
+        </div>
+        <div class="card-body">
+            <form action="/chores/update" method="post">              
+                <input type="hidden" name="chore_id" value="{{ chore.id }}">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <div>
+                    <label class="form-label" for="chore_title">Chore:</label>
+                    <input class="form-control" type="text" name="chore_title" id="chore_title" value="{{ chore.chore_title }}">
+                </div>
+                <div>
+                    <label class="form-label" for="due_date">Due Date:</label>
+                    <input class="form-control" type="date" name="due_date" id="due_date" value="{{ chore.due_date }}">
+                </div>
+                <div>
+                    <label class="form-label" for="chore_description">Details:</label>
+                    <textarea class="form-control" type="text" name="chore_description" id="chore_description" rows="3" value="{{ chore.chore_description }}"></textarea>
+                </div>
+                <div>
+                    <label class="form-label" for="estimated_time">How much time it will take:</label>
+                    <input class="form-control" type="number" name="estimated_time" id="estimated_time" value="{{ chore.estimated_time }}">
+                </div>
+                <div>
+                    <label class="form-label" for="roommate_points">Roommate Points:</label>
+                    <input class="form-control" type="number" name="roommate_points" id="roommate_points" value="{{ chore.roommate_points }}">
+                </div>
+                <fieldset class="mb-3">
+                    <legend class="fs-6">Status:</legend>
+                    <div class="form-check">
+                        <input class="btn btn-check" type="radio" name="complete" id="not_complete" value="0">
+                        <label class="btn btn-check-label btn-outline-secondary" for="not_complete">In Progress</label>
+
+                        <input class="btn btn-check" type="radio" name="complete" id="is_complete" value="1">
+                        <label class="btn btn-outline-success" for="is_complete">Complete</label>
+                    </div>
+                </fieldset>
+                <div class="text-end">
+                    <button class="btn btn-info mt-3 text-start" type="submit">Update Chore</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-3 mb-5">
+        <div>
+            <form action="/chores/{{ chore.id }}/delete" method="post">
+                <input type="hidden" name="chore_id" value="{{ chore.id }}">
+                <button type="submit" class="btn btn-warning">Delete</button>
+            </form>
+        </div>
+        <div>
+            <a href="/chores/all" class="link btn btn-light"> &lt;&lt; Back to All Chores</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

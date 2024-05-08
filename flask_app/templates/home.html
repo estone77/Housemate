@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Welcome, {{ user.full_name }}!</h1>
+<div class="row d-flex justify-content-center">
+    <div class="col-3">
+        <h2>Add a New Chore</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">                        
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <div class="card-body">
+            <form action="/chores/create" method="post">
+                <input type="hidden" name="user_id" value="{{ user.id }}">
+                <div>
+                    <label class="form-label" for="chore_title">Chore:</label>
+                    <input class="form-control" type="text" name="chore_title" id="chore_title">
+                </div>
+                <div>
+                    <label class="form-label" for="due_date">Due Date:</label>
+                    <input class="form-control" type="date" name="due_date" id="due_date">
+                </div>
+                <div>
+                    <label class="form-label" for="estimated_time">How much time it will take:</label>
+                    <input class="form-control" type="number" name="estimated_time" id="estimated_time">
+                </div>
+                <div>
+                    <label class="form-label" for="chore_description">Details:</label>
+                    <textarea class="form-control" name="chore_description" id="chore_description" rows="3" placeholder="the details"></textarea>
+                </div>
+                <div>
+                    <label class="form-label" for="roommate_points">Roommate Points:</label>
+                    <input class="form-control" type="number" name="roommate_points" id="roommate_points">
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-success mt-3 text-start" type="submit">Create Chore</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div mt-5>
+    <a href="/chores/all" class="link btn btn-light mt-3">Got to All Chores >></a>
+</div>
+
+{% endblock content %}

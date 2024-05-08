@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block content %}
+<div class="row d-flex justify-content-center">
+    <div class="col-6">
+        <div class="card text-center">
+            <div class="card-header">
+                <h2 class="display-3">{{ chore.chore_title }}</h2>
+            </div>
+            <div class="card-body">
+                <p>Due Date: {{ chore.due_date }}</p>
+                <p>Estimated time: {{ chore.estimated_time }}</p>
+                <p>Details: {{ chore.chore_description }}</p>
+                <p>Roommate Points: {{ chore.roommate_points }}</p>
+                {% if chore.complete == 1 %}
+                    <button class="btn btn-success">Chore is Complete!</button>
+                {% else %}
+                    <button class="btn btn-warning">Chore is Incomplete!</button>
+                {% endif %}
+            </div>
+        </div>
+        <div class="d-flex justify-content-between">
+            <div mt-5>
+                <a href="/home" class="link btn btn-light mt-3"> &lt;&lt; Back to My Chores</a>
+            </div>
+            <div mt-5>
+                <a href="/chores/{{ chore.id }}/edit" class="link btn btn-light mt-3">Edit Chore</a>
+            </div>
+            <div mt-5>
+                <a href="/chores/all" class="link btn btn-light mt-3">Back to All Chores >></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <div class="card-head">
+                <h3 class="p-3">Add a Comment</h3> 
+            </div>
+            <div class="card-body">
+                <form action="/comments/create" method="post">
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                    <input type="hidden" name="chore_id" value="{{ chore.id }}">
+                    <div>
+                        <label class="form-label" for="comment">Comment:</label>
+                        <textarea class="form-control" type="text" name="comment" id="comment" rows="1"></textarea>
+                    </div>
+                    <button class="btn btn-light mt-3 text-start" type="submit">Comment</button>
+                </form>           
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row d-flex justify-content-center">
+    <div class="col-4">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h3>Comments</h3>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        {% for comment_obj in chore.comments %}
+                            <tr>
+                                <td>
+                                    <p>{{ comment_obj.comment }}</p>
+                                    <p>sample</p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
