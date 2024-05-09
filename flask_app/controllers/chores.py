@@ -6,6 +6,7 @@ from flask import flash, render_template, redirect, request, session
 from pprint import pprint
 
 
+# here is an update
 @app.route("/home")
 def chores():
     """This route displays home."""
